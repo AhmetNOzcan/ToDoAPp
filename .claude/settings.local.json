@@ -5,7 +5,12 @@
       "Bash(flutter create:*)",
       "Bash(flutter pub:*)",
       "Bash(flutter analyze:*)",
-      "Bash(flutter test:*)"
+      "Bash(flutter test:*)",
+      "Bash(rm -rf lib/app.dart lib/di lib/main.dart android ios test)",
+      "Bash(rm -f pubspec.lock)",
+      "Bash(rm -f apps/todo_pro/test/widget_test.dart apps/todo_lite/test/widget_test.dart)",
+      "Bash(dart pub:*)",
+      "Bash(dart analyze:*)"
     ]
   }
 }

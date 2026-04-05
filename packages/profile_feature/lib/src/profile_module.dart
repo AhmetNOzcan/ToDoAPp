@@ -11,7 +11,6 @@ import 'domain/usecases/get_profile.dart';
 import 'domain/usecases/update_profile.dart';
 import 'domain/usecases/update_profile_photo.dart';
 import 'presentation/bloc/profile_bloc.dart';
-import 'presentation/bloc/profile_event.dart';
 import 'presentation/pages/profile_page.dart';
 
 class ProfileModule extends FeatureModule {

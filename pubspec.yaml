@@ -1,29 +1,12 @@
-name: todo_app
-description: "A multi-module Flutter Todo application."
+name: todo_workspace
 publish_to: 'none'
-version: 1.0.0+1
 
 environment:
   sdk: ^3.11.0
 
-dependencies:
-  flutter:
-    sdk: flutter
-  core:
-    path: packages/core
-  todo_feature:
-    path: packages/todo_feature
-  profile_feature:
-    path: packages/profile_feature
-  go_router: ^14.8.1
-  get_it: ^8.0.3
-  sqflite: ^2.4.2
-  path_provider: ^2.1.5
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^5.0.0
-
-flutter:
-  uses-material-design: true
+workspace:
+  - apps/todo_pro
+  - apps/todo_lite
+  - packages/core
+  - packages/todo_feature
+  - packages/profile_feature
