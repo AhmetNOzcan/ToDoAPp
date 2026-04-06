@@ -1,18 +1,25 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:todo_feature/src/data/database/todo_database.dart';
 import 'package:todo_feature/src/data/datasources/todo_local_data_source.dart';
 import 'package:todo_feature/src/data/models/todo_model.dart';
 
 class MockDatabase extends Mock implements Database {}
 
+class MockTodoDatabase extends Mock implements TodoDatabase {}
+
 void main() {
   late TodoLocalDataSourceImpl dataSource;
   late MockDatabase mockDatabase;
+  late MockTodoDatabase mockTodoDatabase;
 
   setUp(() {
     mockDatabase = MockDatabase();
-    dataSource = TodoLocalDataSourceImpl(database: mockDatabase);
+    mockTodoDatabase = MockTodoDatabase();
+    when(() => mockTodoDatabase.database)
+        .thenAnswer((_) async => mockDatabase);
+    dataSource = TodoLocalDataSourceImpl(db: mockTodoDatabase);
   });
 
   final tCreatedAt = DateTime(2025, 1, 15, 10, 30);

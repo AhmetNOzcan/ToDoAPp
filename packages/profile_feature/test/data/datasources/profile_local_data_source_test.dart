@@ -1,18 +1,25 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:profile_feature/src/data/database/profile_database.dart';
 import 'package:profile_feature/src/data/datasources/profile_local_data_source.dart';
 import 'package:profile_feature/src/data/models/profile_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class MockDatabase extends Mock implements Database {}
 
+class MockProfileDatabase extends Mock implements ProfileDatabase {}
+
 void main() {
   late ProfileLocalDataSourceImpl dataSource;
   late MockDatabase mockDatabase;
+  late MockProfileDatabase mockProfileDatabase;
 
   setUp(() {
     mockDatabase = MockDatabase();
-    dataSource = ProfileLocalDataSourceImpl(database: mockDatabase);
+    mockProfileDatabase = MockProfileDatabase();
+    when(() => mockProfileDatabase.database)
+        .thenAnswer((_) async => mockDatabase);
+    dataSource = ProfileLocalDataSourceImpl(db: mockProfileDatabase);
   });
 
   group('getProfile', () {

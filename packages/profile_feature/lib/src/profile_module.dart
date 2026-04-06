@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'data/database/profile_database.dart';
 import 'data/datasources/profile_local_data_source.dart';
 import 'data/repositories/profile_repository_impl.dart';
 import 'domain/repositories/profile_repository.dart';
@@ -16,9 +17,12 @@ import 'presentation/pages/profile_page.dart';
 class ProfileModule extends FeatureModule {
   @override
   void registerDependencies(GetIt sl) {
+    // Database (feature-owned)
+    sl.registerLazySingleton<ProfileDatabase>(() => ProfileDatabase());
+
     // Data sources
     sl.registerLazySingleton<ProfileLocalDataSource>(
-      () => ProfileLocalDataSourceImpl(database: sl()),
+      () => ProfileLocalDataSourceImpl(db: sl()),
     );
 
     // Repositories

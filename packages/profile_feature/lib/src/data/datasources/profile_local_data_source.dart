@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
-import 'package:sqflite/sqflite.dart';
 
+import '../database/profile_database.dart';
 import '../models/profile_model.dart';
 
 abstract class ProfileLocalDataSource {
@@ -12,12 +12,13 @@ abstract class ProfileLocalDataSource {
 }
 
 class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
-  final Database database;
+  final ProfileDatabase _db;
 
-  ProfileLocalDataSourceImpl({required this.database});
+  ProfileLocalDataSourceImpl({required ProfileDatabase db}) : _db = db;
 
   @override
   Future<ProfileModel> getProfile() async {
+    final database = await _db.database;
     final maps = await database.query('user_profile', limit: 1);
     if (maps.isEmpty) {
       return const ProfileModel(
@@ -31,6 +32,7 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
 
   @override
   Future<void> updateProfile(ProfileModel profile) async {
+    final database = await _db.database;
     await database.update(
       'user_profile',
       profile.toMap(),

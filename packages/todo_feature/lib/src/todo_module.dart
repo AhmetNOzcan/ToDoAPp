@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
+import 'data/database/todo_database.dart';
 import 'data/datasources/todo_local_data_source.dart';
 import 'data/repositories/todo_repository_impl.dart';
 import 'domain/repositories/todo_repository.dart';
@@ -21,9 +22,12 @@ import 'presentation/pages/todo_list_page.dart';
 class TodoModule extends FeatureModule {
   @override
   void registerDependencies(GetIt sl) {
+    // Database (feature-owned)
+    sl.registerLazySingleton<TodoDatabase>(() => TodoDatabase());
+
     // Data sources
     sl.registerLazySingleton<TodoLocalDataSource>(
-      () => TodoLocalDataSourceImpl(database: sl()),
+      () => TodoLocalDataSourceImpl(db: sl()),
     );
 
     // Repositories
