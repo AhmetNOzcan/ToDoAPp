@@ -4,8 +4,6 @@ import 'package:todo_feature_domain/todo_feature_domain.dart';
 import 'todo_detail_event.dart';
 import 'todo_detail_state.dart';
 
-import 'package:flutter/material.dart';
-
 class TodoDetailBloc extends Bloc<TodoDetailEvent, TodoDetailState> {
   final GetTodoById _getTodoById;
   final UpdateTodo _updateTodo;
