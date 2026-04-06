@@ -1,0 +1,9 @@
+#!/bin/sh
+# Blocks `git push` if `flutter analyze` or `bloc_lint` reports errors.
+# Bypass in emergencies with: git push --no-verify
+set -e
+
+for pkg in packages/todo_feature packages/profile_feature; do
+  echo "==> Analyzing $pkg"
+  ( cd "$pkg" && flutter analyze && dart run bloc_lint . )
+done

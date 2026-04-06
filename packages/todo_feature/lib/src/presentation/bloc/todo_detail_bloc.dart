@@ -18,11 +18,11 @@ class TodoDetailBloc extends Bloc<TodoDetailEvent, TodoDetailState> {
     required UpdateTodo updateTodo,
     required ToggleTodo toggleTodo,
     required DeleteTodo deleteTodo,
-  })  : _getTodoById = getTodoById,
-        _updateTodo = updateTodo,
-        _toggleTodo = toggleTodo,
-        _deleteTodo = deleteTodo,
-        super(const TodoDetailState()) {
+  }) : _getTodoById = getTodoById,
+       _updateTodo = updateTodo,
+       _toggleTodo = toggleTodo,
+       _deleteTodo = deleteTodo,
+       super(const TodoDetailState()) {
     on<LoadTodoDetail>(_onLoadTodoDetail);
     on<UpdateTodoRequested>(_onUpdateTodo);
     on<ToggleTodoDetailRequested>(_onToggleTodo);
