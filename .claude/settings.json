@@ -12,7 +12,8 @@
       "Bash(git rm:*)",
       "Bash(git push:*)",
       "Bash(.githooks/pre-push)",
-      "Read(//Users/ahmetnasitozcan/.pub-cache/hosted/**)"
+      "Read(//Users/ahmetnasitozcan/.pub-cache/hosted/**)",
+      "Bash(dart test:*)"
     ]
   }
 }

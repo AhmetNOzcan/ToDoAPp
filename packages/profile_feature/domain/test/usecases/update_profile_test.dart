@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:profile_feature_domain/src/entities/user_profile.dart';
 import 'package:profile_feature_domain/src/repositories/profile_repository.dart';

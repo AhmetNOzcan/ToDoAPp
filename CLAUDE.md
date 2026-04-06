@@ -15,11 +15,12 @@ flutter run
 flutter analyze
 
 # Run all tests (per-package, no monorepo tool)
+# Domain packages are pure Dart — use `dart test`. All others use `flutter test`.
 cd packages/core && flutter test
-cd packages/todo_feature/domain && flutter test
+cd packages/todo_feature/domain && dart test
 cd packages/todo_feature/data && flutter test
 cd packages/todo_feature/presentation && flutter test
-cd packages/profile_feature/domain && flutter test
+cd packages/profile_feature/domain && dart test
 cd packages/profile_feature/data && flutter test
 cd packages/profile_feature/presentation && flutter test
 
@@ -43,11 +44,11 @@ apps/
 packages/
   core/                       # Shared: AppTheme, FeatureModule contract, service locator (GetIt)
   todo_feature/
-    domain/                   # todo_feature_domain: entities, repository contracts, use cases, TodoStatsProvider
+    domain/                   # todo_feature_domain: entities, repository contracts, use cases, TodoStatsProvider (pure Dart, no Flutter dep)
     data/                     # todo_feature_data:   database, datasources, models, repository impls (depends on domain)
     presentation/             # todo_feature_presentation: BLoCs, pages, widgets, TodoModule (depends on domain + data)
   profile_feature/
-    domain/                   # profile_feature_domain
+    domain/                   # profile_feature_domain (pure Dart, no Flutter dep)
     data/                     # profile_feature_data (depends on profile_feature_domain)
     presentation/             # profile_feature_presentation (depends on profile_feature_domain + _data + todo_feature_domain)
 ```

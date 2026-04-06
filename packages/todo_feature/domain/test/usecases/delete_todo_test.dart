@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:todo_feature_domain/src/repositories/todo_repository.dart';
 import 'package:todo_feature_domain/src/usecases/delete_todo.dart';
