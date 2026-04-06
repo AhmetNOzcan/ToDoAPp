@@ -9,7 +9,10 @@
       "Bash(chmod +x .githooks/pre-push)",
       "Bash(find /Users/ahmetnasitozcan/Development/ToDoAPp -name \"pubspec.yaml\" -type f -exec grep -l \"melos\\\\|workspace\" {} \\\\;)",
       "Bash(git mv:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(git push:*)",
+      "Bash(.githooks/pre-push)",
+      "Read(//Users/ahmetnasitozcan/.pub-cache/hosted/**)"
     ]
   }
 }
