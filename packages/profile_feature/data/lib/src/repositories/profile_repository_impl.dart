@@ -1,7 +1,7 @@
+import 'package:profile_feature_domain/profile_feature_domain.dart';
+
 import '../datasources/profile_local_data_source.dart';
 import '../models/profile_model.dart';
-import '../../domain/entities/user_profile.dart';
-import '../../domain/repositories/profile_repository.dart';
 
 class ProfileRepositoryImpl implements ProfileRepository {
   final ProfileLocalDataSource localDataSource;

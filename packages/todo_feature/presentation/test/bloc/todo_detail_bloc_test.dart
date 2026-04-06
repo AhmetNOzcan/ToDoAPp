@@ -1,14 +1,14 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:todo_feature/src/domain/entities/todo.dart';
-import 'package:todo_feature/src/domain/usecases/delete_todo.dart';
-import 'package:todo_feature/src/domain/usecases/get_todo_by_id.dart';
-import 'package:todo_feature/src/domain/usecases/toggle_todo.dart';
-import 'package:todo_feature/src/domain/usecases/update_todo.dart';
-import 'package:todo_feature/src/presentation/bloc/todo_detail_bloc.dart';
-import 'package:todo_feature/src/presentation/bloc/todo_detail_event.dart';
-import 'package:todo_feature/src/presentation/bloc/todo_detail_state.dart';
+import 'package:todo_feature_domain/src/entities/todo.dart';
+import 'package:todo_feature_domain/src/usecases/delete_todo.dart';
+import 'package:todo_feature_domain/src/usecases/get_todo_by_id.dart';
+import 'package:todo_feature_domain/src/usecases/toggle_todo.dart';
+import 'package:todo_feature_domain/src/usecases/update_todo.dart';
+import 'package:todo_feature_presentation/src/bloc/todo_detail_bloc.dart';
+import 'package:todo_feature_presentation/src/bloc/todo_detail_event.dart';
+import 'package:todo_feature_presentation/src/bloc/todo_detail_state.dart';
 
 class MockGetTodoById extends Mock implements GetTodoById {}
 

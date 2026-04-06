@@ -2,23 +2,14 @@ import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_feature_data/todo_feature_data.dart';
+import 'package:todo_feature_domain/todo_feature_domain.dart';
 
-import 'data/database/todo_database.dart';
-import 'data/datasources/todo_local_data_source.dart';
-import 'data/repositories/todo_repository_impl.dart';
-import 'todo_stats_provider.dart';
-import 'domain/repositories/todo_repository.dart';
-import 'domain/usecases/add_todo.dart';
-import 'domain/usecases/delete_todo.dart';
-import 'domain/usecases/get_todo_by_id.dart';
-import 'domain/usecases/get_todos.dart';
-import 'domain/usecases/toggle_todo.dart';
-import 'domain/usecases/update_todo.dart';
-import 'presentation/bloc/todo_detail_bloc.dart';
-import 'presentation/bloc/todo_detail_event.dart';
-import 'presentation/bloc/todo_list_bloc.dart';
-import 'presentation/pages/todo_detail_page.dart';
-import 'presentation/pages/todo_list_page.dart';
+import 'bloc/todo_detail_bloc.dart';
+import 'bloc/todo_detail_event.dart';
+import 'bloc/todo_list_bloc.dart';
+import 'pages/todo_detail_page.dart';
+import 'pages/todo_list_page.dart';
 
 class TodoModule extends FeatureModule {
   @override

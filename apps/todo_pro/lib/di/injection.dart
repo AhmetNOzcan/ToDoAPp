@@ -1,7 +1,7 @@
 import 'package:core/core.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:todo_feature/todo_feature.dart';
-import 'package:profile_feature/profile_feature.dart';
+import 'package:profile_feature_presentation/profile_feature_presentation.dart';
+import 'package:todo_feature_presentation/todo_feature_presentation.dart';
 
 final List<FeatureModule> featureModules = [
   TodoModule(),

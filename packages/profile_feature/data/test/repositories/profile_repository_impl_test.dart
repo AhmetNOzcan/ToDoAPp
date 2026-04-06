@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:profile_feature/src/data/datasources/profile_local_data_source.dart';
-import 'package:profile_feature/src/data/models/profile_model.dart';
-import 'package:profile_feature/src/data/repositories/profile_repository_impl.dart';
-import 'package:profile_feature/src/domain/entities/user_profile.dart';
+import 'package:profile_feature_data/src/datasources/profile_local_data_source.dart';
+import 'package:profile_feature_data/src/models/profile_model.dart';
+import 'package:profile_feature_data/src/repositories/profile_repository_impl.dart';
+import 'package:profile_feature_domain/src/entities/user_profile.dart';
 
 class MockProfileLocalDataSource extends Mock
     implements ProfileLocalDataSource {}

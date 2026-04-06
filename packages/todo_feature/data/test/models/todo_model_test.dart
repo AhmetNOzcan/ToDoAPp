@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todo_feature/src/data/models/todo_model.dart';
-import 'package:todo_feature/src/domain/entities/todo.dart';
+import 'package:todo_feature_data/src/models/todo_model.dart';
+import 'package:todo_feature_domain/src/entities/todo.dart';
 
 void main() {
   final tCreatedAt = DateTime(2025, 1, 15, 10, 30);

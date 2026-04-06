@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:todo_feature/src/data/datasources/todo_local_data_source.dart';
-import 'package:todo_feature/src/data/models/todo_model.dart';
-import 'package:todo_feature/src/data/repositories/todo_repository_impl.dart';
-import 'package:todo_feature/src/domain/entities/todo.dart';
+import 'package:todo_feature_data/src/datasources/todo_local_data_source.dart';
+import 'package:todo_feature_data/src/models/todo_model.dart';
+import 'package:todo_feature_data/src/repositories/todo_repository_impl.dart';
+import 'package:todo_feature_domain/src/entities/todo.dart';
 
 class MockTodoLocalDataSource extends Mock implements TodoLocalDataSource {}
 

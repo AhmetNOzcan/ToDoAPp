@@ -1,10 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_feature_domain/todo_feature_domain.dart';
 
-import '../../domain/entities/todo.dart';
-import '../../domain/usecases/add_todo.dart';
-import '../../domain/usecases/delete_todo.dart';
-import '../../domain/usecases/get_todos.dart';
-import '../../domain/usecases/toggle_todo.dart';
 import 'todo_list_event.dart';
 import 'todo_list_state.dart';
 

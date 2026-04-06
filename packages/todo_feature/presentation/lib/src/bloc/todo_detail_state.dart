@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-
-import '../../domain/entities/todo.dart';
+import 'package:todo_feature_domain/todo_feature_domain.dart';
 
 enum TodoDetailStatus { initial, loading, loaded, saved, deleted, error }
 

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:profile_feature/src/domain/entities/user_profile.dart';
-import 'package:profile_feature/src/domain/repositories/profile_repository.dart';
-import 'package:profile_feature/src/domain/usecases/get_profile.dart';
+import 'package:profile_feature_domain/src/entities/user_profile.dart';
+import 'package:profile_feature_domain/src/repositories/profile_repository.dart';
+import 'package:profile_feature_domain/src/usecases/get_profile.dart';
 
 class MockProfileRepository extends Mock implements ProfileRepository {}
 

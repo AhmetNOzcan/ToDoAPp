@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:todo_feature/todo_feature.dart';
+import 'package:todo_feature_presentation/todo_feature_presentation.dart';
 
 final List<FeatureModule> featureModules = [
   TodoModule(),

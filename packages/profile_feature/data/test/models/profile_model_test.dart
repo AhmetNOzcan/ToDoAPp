@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile_feature/src/data/models/profile_model.dart';
-import 'package:profile_feature/src/domain/entities/user_profile.dart';
+import 'package:profile_feature_data/src/models/profile_model.dart';
+import 'package:profile_feature_domain/src/entities/user_profile.dart';
 
 void main() {
   group('ProfileModel', () {

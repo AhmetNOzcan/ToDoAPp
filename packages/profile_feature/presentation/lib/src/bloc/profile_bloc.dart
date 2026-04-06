@@ -1,10 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:todo_feature/todo_feature.dart';
+import 'package:profile_feature_domain/profile_feature_domain.dart';
+import 'package:todo_feature_domain/todo_feature_domain.dart';
 
-import '../../domain/usecases/get_profile.dart';
-import '../../domain/usecases/update_profile.dart';
-import '../../domain/usecases/update_profile_photo.dart';
 import 'profile_event.dart';
 import 'profile_state.dart';
 

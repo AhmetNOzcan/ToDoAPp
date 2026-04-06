@@ -1,6 +1,5 @@
-import '../../domain/entities/todo.dart';
-import '../../domain/repositories/todo_repository.dart';
-import '../../todo_stats_provider.dart';
+import 'package:todo_feature_domain/todo_feature_domain.dart';
+
 import '../datasources/todo_local_data_source.dart';
 import '../models/todo_model.dart';
 

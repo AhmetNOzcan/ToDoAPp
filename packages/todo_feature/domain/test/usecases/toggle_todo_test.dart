@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:todo_feature/src/domain/repositories/todo_repository.dart';
-import 'package:todo_feature/src/domain/usecases/toggle_todo.dart';
+import 'package:todo_feature_domain/src/repositories/todo_repository.dart';
+import 'package:todo_feature_domain/src/usecases/toggle_todo.dart';
 
 class MockTodoRepository extends Mock implements TodoRepository {}
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../domain/entities/todo.dart';
+import 'package:todo_feature_domain/todo_feature_domain.dart';
 
 class TodoItemWidget extends StatelessWidget {
   final Todo todo;

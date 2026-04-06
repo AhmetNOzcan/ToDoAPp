@@ -16,48 +16,62 @@ flutter analyze
 
 # Run all tests (per-package, no monorepo tool)
 cd packages/core && flutter test
-cd packages/todo_feature && flutter test
-cd packages/profile_feature && flutter test
+cd packages/todo_feature/domain && flutter test
+cd packages/todo_feature/data && flutter test
+cd packages/todo_feature/presentation && flutter test
+cd packages/profile_feature/domain && flutter test
+cd packages/profile_feature/data && flutter test
+cd packages/profile_feature/presentation && flutter test
 
 # Run a single test file
-cd packages/todo_feature && flutter test test/presentation/bloc/todo_list_bloc_test.dart
+cd packages/todo_feature/presentation && flutter test test/bloc/todo_list_bloc_test.dart
 
 # Run a single test by name
-cd packages/todo_feature && flutter test --name "emits loaded when LoadTodos succeeds"
+cd packages/todo_feature/presentation && flutter test --name "emits loaded when LoadTodos succeeds"
 ```
 
 There is no melos, Makefile, or CI config. Standard `flutter` CLI is used for everything.
 
 ## Architecture
 
-Multi-package Flutter app using **Clean Architecture + BLoC**:
+Multi-package Flutter app using **Clean Architecture + BLoC**. Each feature is split into three sibling packages — one per layer — so dependency direction is enforced by the package system:
 
 ```
-lib/                          # App shell: main.dart, app.dart (GoRouter + bottom nav), DI init
+apps/
+  todo_lite/                  # App shell: depends on todo_feature_presentation
+  todo_pro/                   # App shell: depends on todo_feature_presentation + profile_feature_presentation
 packages/
   core/                       # Shared: AppTheme, FeatureModule contract, service locator (GetIt)
-  todo_feature/               # Todo CRUD feature (owns todo_feature.db, exports TodoStatsProvider contract)
-  profile_feature/            # User profile feature (owns profile_feature.db, depends on todo_feature for stats)
+  todo_feature/
+    domain/                   # todo_feature_domain: entities, repository contracts, use cases, TodoStatsProvider
+    data/                     # todo_feature_data:   database, datasources, models, repository impls (depends on domain)
+    presentation/             # todo_feature_presentation: BLoCs, pages, widgets, TodoModule (depends on domain + data)
+  profile_feature/
+    domain/                   # profile_feature_domain
+    data/                     # profile_feature_data (depends on profile_feature_domain)
+    presentation/             # profile_feature_presentation (depends on profile_feature_domain + _data + todo_feature_domain)
 ```
 
-Each feature package follows the same internal structure:
+Each layer package follows the same internal structure:
 
 ```
 lib/src/
-  data/
-    database/                 # Feature-owned sqflite helper (opens its own .db file, manages schema)
-    datasources/              # Abstract + Impl (resolve sqflite Database lazily via the feature helper)
-    models/                   # Extend domain entities, add fromMap/toMap
-    repositories/             # Implement domain repository contracts
-  domain/
-    entities/                 # Immutable Equatable value objects with copyWith
-    repositories/             # Abstract repository interfaces
-    usecases/                 # Single-responsibility callable classes (call() method)
-  presentation/
-    bloc/                     # BLoC + Events + State (status enum pattern: initial/loading/loaded/error)
-    pages/                    # Full-screen widgets
-    widgets/                  # Reusable UI components
-  *_module.dart               # FeatureModule impl: registers DI + declares GoRouter routes
+  # data layer
+  database/                 # Feature-owned sqflite helper (opens its own .db file, manages schema)
+  datasources/              # Abstract + Impl (resolve sqflite Database lazily via the feature helper)
+  models/                   # Extend domain entities, add fromMap/toMap
+  repositories/             # Implement domain repository contracts
+
+  # domain layer
+  entities/                 # Immutable Equatable value objects with copyWith
+  repositories/             # Abstract repository interfaces
+  usecases/                 # Single-responsibility callable classes (call() method)
+
+  # presentation layer
+  bloc/                     # BLoC + Events + State (status enum pattern: initial/loading/loaded/error)
+  pages/                    # Full-screen widgets
+  widgets/                  # Reusable UI components
+  *_module.dart             # FeatureModule impl: registers DI + declares GoRouter routes (lives in presentation)
 ```
 
 ## Dependency Injection
@@ -74,14 +88,14 @@ lib/src/
 
 ## Cross-feature contracts
 
-When one feature needs data from another, the contract lives **with the feature that owns the data**, not in `core`. For example, `TodoStatsProvider` is exported from `todo_feature` and consumed by `profile_feature` (which depends on `todo_feature` only for that contract). `core` stays free of feature-specific knowledge.
+When one feature needs data from another, the contract lives in the **domain** package of the feature that owns the data, not in `core`. For example, `TodoStatsProvider` is exported from `todo_feature_domain` and consumed by `profile_feature_presentation` (which depends on `todo_feature_domain` only for that contract). `core` stays free of feature-specific knowledge, and the consumer never has to depend on the producer's data or presentation layer.
 
 ## Database
 
 SQLite via `sqflite`. **Each feature owns its own database file and schema** — there is no shared database helper. Adding a feature does not require touching `core` or any other feature.
 
-- `todo_feature` → `todo_feature.db`, schema in `packages/todo_feature/lib/src/data/database/todo_database.dart` (table: `todos`)
-- `profile_feature` → `profile_feature.db`, schema in `packages/profile_feature/lib/src/data/database/profile_database.dart` (table: `user_profile`, seeded with one row so `update` by `id=1` always succeeds)
+- `todo_feature_data` → `todo_feature.db`, schema in `packages/todo_feature/data/lib/src/database/todo_database.dart` (table: `todos`)
+- `profile_feature_data` → `profile_feature.db`, schema in `packages/profile_feature/data/lib/src/database/profile_database.dart` (table: `user_profile`, seeded with one row so `update` by `id=1` always succeeds)
 
 Each feature helper exposes `Future<Database> get database` and lazily opens on first access. Data sources depend on the feature helper (not a `Database`) and `await helper.database` per call. Both schemas are at version 1, no migrations yet.
 

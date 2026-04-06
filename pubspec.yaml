@@ -8,5 +8,9 @@ workspace:
   - apps/todo_pro
   - apps/todo_lite
   - packages/core
-  - packages/todo_feature
-  - packages/profile_feature
+  - packages/todo_feature/domain
+  - packages/todo_feature/data
+  - packages/todo_feature/presentation
+  - packages/profile_feature/domain
+  - packages/profile_feature/data
+  - packages/profile_feature/presentation

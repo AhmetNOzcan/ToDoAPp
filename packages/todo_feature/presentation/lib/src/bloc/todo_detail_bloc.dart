@@ -1,9 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_feature_domain/todo_feature_domain.dart';
 
-import '../../domain/usecases/delete_todo.dart';
-import '../../domain/usecases/get_todo_by_id.dart';
-import '../../domain/usecases/toggle_todo.dart';
-import '../../domain/usecases/update_todo.dart';
 import 'todo_detail_event.dart';
 import 'todo_detail_state.dart';
 
