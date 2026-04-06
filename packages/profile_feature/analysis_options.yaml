@@ -1,7 +1,0 @@
-include:
-  - package:lints/recommended.yaml
-  - package:bloc_lint/recommended.yaml
-
-bloc:
-  rules:
-    avoid_flutter_imports: error
