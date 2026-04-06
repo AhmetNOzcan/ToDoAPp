@@ -8,17 +8,21 @@ import 'todo_detail_event.dart';
 import 'todo_detail_state.dart';
 
 class TodoDetailBloc extends Bloc<TodoDetailEvent, TodoDetailState> {
-  final GetTodoById getTodoById;
-  final UpdateTodo updateTodo;
-  final ToggleTodo toggleTodo;
-  final DeleteTodo deleteTodo;
+  final GetTodoById _getTodoById;
+  final UpdateTodo _updateTodo;
+  final ToggleTodo _toggleTodo;
+  final DeleteTodo _deleteTodo;
 
   TodoDetailBloc({
-    required this.getTodoById,
-    required this.updateTodo,
-    required this.toggleTodo,
-    required this.deleteTodo,
-  }) : super(const TodoDetailState()) {
+    required GetTodoById getTodoById,
+    required UpdateTodo updateTodo,
+    required ToggleTodo toggleTodo,
+    required DeleteTodo deleteTodo,
+  })  : _getTodoById = getTodoById,
+        _updateTodo = updateTodo,
+        _toggleTodo = toggleTodo,
+        _deleteTodo = deleteTodo,
+        super(const TodoDetailState()) {
     on<LoadTodoDetail>(_onLoadTodoDetail);
     on<UpdateTodoRequested>(_onUpdateTodo);
     on<ToggleTodoDetailRequested>(_onToggleTodo);
@@ -31,20 +35,24 @@ class TodoDetailBloc extends Bloc<TodoDetailEvent, TodoDetailState> {
   ) async {
     emit(state.copyWith(status: TodoDetailStatus.loading));
     try {
-      final todo = await getTodoById(event.id);
+      final todo = await _getTodoById(event.id);
       if (todo != null) {
         emit(state.copyWith(status: TodoDetailStatus.loaded, todo: todo));
       } else {
-        emit(state.copyWith(
-          status: TodoDetailStatus.error,
-          errorMessage: 'Todo not found',
-        ));
+        emit(
+          state.copyWith(
+            status: TodoDetailStatus.error,
+            errorMessage: 'Todo not found',
+          ),
+        );
       }
     } catch (e) {
-      emit(state.copyWith(
-        status: TodoDetailStatus.error,
-        errorMessage: e.toString(),
-      ));
+      emit(
+        state.copyWith(
+          status: TodoDetailStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -60,13 +68,15 @@ class TodoDetailBloc extends Bloc<TodoDetailEvent, TodoDetailState> {
         title: event.title,
         description: event.description,
       );
-      await updateTodo(updated);
+      await _updateTodo(updated);
       emit(state.copyWith(status: TodoDetailStatus.saved, todo: updated));
     } catch (e) {
-      emit(state.copyWith(
-        status: TodoDetailStatus.error,
-        errorMessage: e.toString(),
-      ));
+      emit(
+        state.copyWith(
+          status: TodoDetailStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -78,14 +88,16 @@ class TodoDetailBloc extends Bloc<TodoDetailEvent, TodoDetailState> {
     if (current?.id == null) return;
 
     try {
-      await toggleTodo(current!.id!);
+      await _toggleTodo(current!.id!);
       final updated = current.copyWith(isCompleted: !current.isCompleted);
       emit(state.copyWith(status: TodoDetailStatus.loaded, todo: updated));
     } catch (e) {
-      emit(state.copyWith(
-        status: TodoDetailStatus.error,
-        errorMessage: e.toString(),
-      ));
+      emit(
+        state.copyWith(
+          status: TodoDetailStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -97,13 +109,15 @@ class TodoDetailBloc extends Bloc<TodoDetailEvent, TodoDetailState> {
     if (current?.id == null) return;
 
     try {
-      await deleteTodo(current!.id!);
+      await _deleteTodo(current!.id!);
       emit(state.copyWith(status: TodoDetailStatus.deleted));
     } catch (e) {
-      emit(state.copyWith(
-        status: TodoDetailStatus.error,
-        errorMessage: e.toString(),
-      ));
+      emit(
+        state.copyWith(
+          status: TodoDetailStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 }

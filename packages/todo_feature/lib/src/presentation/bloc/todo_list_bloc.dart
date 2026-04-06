@@ -9,17 +9,21 @@ import 'todo_list_event.dart';
 import 'todo_list_state.dart';
 
 class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
-  final GetTodos getTodos;
-  final AddTodo addTodo;
-  final ToggleTodo toggleTodo;
-  final DeleteTodo deleteTodo;
+  final GetTodos _getTodos;
+  final AddTodo _addTodo;
+  final ToggleTodo _toggleTodo;
+  final DeleteTodo _deleteTodo;
 
   TodoListBloc({
-    required this.getTodos,
-    required this.addTodo,
-    required this.toggleTodo,
-    required this.deleteTodo,
-  }) : super(const TodoListState()) {
+    required GetTodos getTodos,
+    required AddTodo addTodo,
+    required ToggleTodo toggleTodo,
+    required DeleteTodo deleteTodo,
+  })  : _getTodos = getTodos,
+        _addTodo = addTodo,
+        _toggleTodo = toggleTodo,
+        _deleteTodo = deleteTodo,
+        super(const TodoListState()) {
     on<LoadTodos>(_onLoadTodos);
     on<AddTodoRequested>(_onAddTodo);
     on<ToggleTodoRequested>(_onToggleTodo);
@@ -32,7 +36,7 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
   ) async {
     emit(state.copyWith(status: TodoListStatus.loading));
     try {
-      final todos = await getTodos();
+      final todos = await _getTodos();
       emit(state.copyWith(status: TodoListStatus.loaded, todos: todos));
     } catch (e) {
       emit(state.copyWith(
@@ -52,7 +56,7 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
         description: event.description,
         createdAt: DateTime.now(),
       );
-      await addTodo(todo);
+      await _addTodo(todo);
       add(const LoadTodos());
     } catch (e) {
       emit(state.copyWith(
@@ -67,7 +71,7 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
     Emitter<TodoListState> emit,
   ) async {
     try {
-      await toggleTodo(event.id);
+      await _toggleTodo(event.id);
       add(const LoadTodos());
     } catch (e) {
       emit(state.copyWith(
@@ -82,7 +86,7 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
     Emitter<TodoListState> emit,
   ) async {
     try {
-      await deleteTodo(event.id);
+      await _deleteTodo(event.id);
       add(const LoadTodos());
     } catch (e) {
       emit(state.copyWith(

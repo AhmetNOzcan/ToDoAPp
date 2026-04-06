@@ -35,10 +35,9 @@ Multi-package Flutter app using **Clean Architecture + BLoC**:
 ```
 lib/                          # App shell: main.dart, app.dart (GoRouter + bottom nav), DI init
 packages/
-  core/                       # Shared: AppTheme, FeatureModule contract,
-                              #         service locator (GetIt), TodoStatsProvider interface
-  todo_feature/               # Todo CRUD feature (owns todo_feature.db)
-  profile_feature/            # User profile feature (owns profile_feature.db)
+  core/                       # Shared: AppTheme, FeatureModule contract, service locator (GetIt)
+  todo_feature/               # Todo CRUD feature (owns todo_feature.db, exports TodoStatsProvider contract)
+  profile_feature/            # User profile feature (owns profile_feature.db, depends on todo_feature for stats)
 ```
 
 Each feature package follows the same internal structure:
@@ -72,6 +71,10 @@ lib/src/
 ## Routing
 
 `GoRouter` with a `ShellRoute` for persistent bottom navigation. Each `FeatureModule` exposes `List<RouteBase> get routes` which are spread into the shell. Routes wrap pages with `BlocProvider` to inject the BLoC.
+
+## Cross-feature contracts
+
+When one feature needs data from another, the contract lives **with the feature that owns the data**, not in `core`. For example, `TodoStatsProvider` is exported from `todo_feature` and consumed by `profile_feature` (which depends on `todo_feature` only for that contract). `core` stays free of feature-specific knowledge.
 
 ## Database
 

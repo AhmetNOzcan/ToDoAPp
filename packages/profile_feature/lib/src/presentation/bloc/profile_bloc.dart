@@ -1,6 +1,6 @@
-import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:todo_feature/todo_feature.dart';
 
 import '../../domain/usecases/get_profile.dart';
 import '../../domain/usecases/update_profile.dart';
@@ -9,19 +9,24 @@ import 'profile_event.dart';
 import 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  final GetProfile getProfile;
-  final UpdateProfile updateProfile;
-  final UpdateProfilePhoto updateProfilePhoto;
-  final TodoStatsProvider todoStatsProvider;
-  final ImagePicker imagePicker;
+  final GetProfile _getProfile;
+  final UpdateProfile _updateProfile;
+  final UpdateProfilePhoto _updateProfilePhoto;
+  final TodoStatsProvider _todoStatsProvider;
+  final ImagePicker _imagePicker;
 
   ProfileBloc({
-    required this.getProfile,
-    required this.updateProfile,
-    required this.updateProfilePhoto,
-    required this.todoStatsProvider,
-    required this.imagePicker,
-  }) : super(const ProfileState()) {
+    required GetProfile getProfile,
+    required UpdateProfile updateProfile,
+    required UpdateProfilePhoto updateProfilePhoto,
+    required TodoStatsProvider todoStatsProvider,
+    required ImagePicker imagePicker,
+  })  : _getProfile = getProfile,
+        _updateProfile = updateProfile,
+        _updateProfilePhoto = updateProfilePhoto,
+        _todoStatsProvider = todoStatsProvider,
+        _imagePicker = imagePicker,
+        super(const ProfileState()) {
     on<LoadProfile>(_onLoadProfile);
     on<UpdateProfileRequested>(_onUpdateProfile);
     on<PickPhotoFromCamera>(_onPickPhotoFromCamera);
@@ -34,8 +39,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ) async {
     emit(state.copyWith(status: ProfileStatus.loading));
     try {
-      final profile = await getProfile();
-      final completedCount = await todoStatsProvider.getCompletedTodoCount();
+      final profile = await _getProfile();
+      final completedCount = await _todoStatsProvider.getCompletedTodoCount();
       emit(state.copyWith(
         status: ProfileStatus.loaded,
         profile: profile,
@@ -61,7 +66,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         firstName: event.firstName,
         lastName: event.lastName,
       );
-      await updateProfile(updated);
+      await _updateProfile(updated);
       emit(state.copyWith(status: ProfileStatus.saved, profile: updated));
     } catch (e) {
       emit(state.copyWith(
@@ -93,7 +98,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     if (current == null) return;
 
     try {
-      final pickedFile = await imagePicker.pickImage(
+      final pickedFile = await _imagePicker.pickImage(
         source: source,
         maxWidth: 512,
         maxHeight: 512,
@@ -101,9 +106,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       );
       if (pickedFile == null) return;
 
-      final savedPath = await updateProfilePhoto(pickedFile.path);
+      final savedPath = await _updateProfilePhoto(pickedFile.path);
       final updated = current.copyWith(photoPath: savedPath);
-      await updateProfile(updated);
+      await _updateProfile(updated);
       emit(state.copyWith(status: ProfileStatus.saved, profile: updated));
     } catch (e) {
       emit(state.copyWith(

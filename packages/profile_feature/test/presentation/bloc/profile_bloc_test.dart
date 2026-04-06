@@ -1,5 +1,4 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mocktail/mocktail.dart';
@@ -10,6 +9,7 @@ import 'package:profile_feature/src/domain/usecases/update_profile_photo.dart';
 import 'package:profile_feature/src/presentation/bloc/profile_bloc.dart';
 import 'package:profile_feature/src/presentation/bloc/profile_event.dart';
 import 'package:profile_feature/src/presentation/bloc/profile_state.dart';
+import 'package:todo_feature/todo_feature.dart';
 
 class MockGetProfile extends Mock implements GetProfile {}
 

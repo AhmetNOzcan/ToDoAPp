@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:pub.dev)",
+      "Bash(bloc lint:*)",
+      "Bash(~/.pub-cache/bin/bloc lint:*)",
+      "Bash(grep -n \"bloc\\\\.\\\\\\(getTodos\\\\|addTodo\\\\|toggleTodo\\\\|deleteTodo\\\\|getTodoById\\\\|updateTodo\\\\\\)\" /Users/ahmetnasitozcan/Development/ToDoAPp/packages/todo_feature/test/presentation/bloc/*.dart)"
+    ]
+  }
+}
