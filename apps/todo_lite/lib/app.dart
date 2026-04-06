@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_feature_navigation/todo_feature_navigation.dart';
 
 import 'di/injection.dart';
 
@@ -8,7 +9,7 @@ class TodoLiteApp extends StatelessWidget {
   TodoLiteApp({super.key});
 
   late final GoRouter _router = GoRouter(
-    initialLocation: '/todos',
+    initialLocation: TodoRoutes.locationList(),
     routes: [...featureModules.expand((m) => m.routes)],
   );
 

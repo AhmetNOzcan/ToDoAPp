@@ -13,7 +13,9 @@ dependencies:
     sdk: flutter
   core: 0.0.1
   todo_feature_presentation: 0.0.1
+  todo_feature_navigation: 0.0.1
   profile_feature_presentation: 0.0.1
+  profile_feature_navigation: 0.0.1
   go_router: ^14.8.1
   get_it: ^8.0.3
   path_provider: ^2.1.5

@@ -10,7 +10,9 @@ workspace:
   - packages/core
   - packages/todo_feature/domain
   - packages/todo_feature/data
+  - packages/todo_feature/navigation
   - packages/todo_feature/presentation
   - packages/profile_feature/domain
   - packages/profile_feature/data
+  - packages/profile_feature/navigation
   - packages/profile_feature/presentation

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:profile_feature_data/profile_feature_data.dart';
 import 'package:profile_feature_domain/profile_feature_domain.dart';
+import 'package:profile_feature_navigation/profile_feature_navigation.dart';
 
 import 'bloc/profile_bloc.dart';
 import 'pages/profile_page.dart';
@@ -51,7 +52,8 @@ class ProfileModule extends FeatureModule {
   @override
   List<RouteBase> get routes => [
         GoRoute(
-          path: '/profile',
+          path: ProfileRoutes.pathRoot,
+          name: ProfileRoutes.nameRoot,
           builder: (context, state) => BlocProvider(
             create: (_) => sl<ProfileBloc>(),
             child: const ProfilePage(),

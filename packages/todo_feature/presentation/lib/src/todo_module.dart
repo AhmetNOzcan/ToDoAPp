@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_feature_data/todo_feature_data.dart';
 import 'package:todo_feature_domain/todo_feature_domain.dart';
+import 'package:todo_feature_navigation/todo_feature_navigation.dart';
 
 import 'bloc/todo_detail_bloc.dart';
 import 'bloc/todo_detail_event.dart';
@@ -62,16 +63,18 @@ class TodoModule extends FeatureModule {
   @override
   List<RouteBase> get routes => [
         GoRoute(
-          path: '/todos',
+          path: TodoRoutes.pathList,
+          name: TodoRoutes.nameList,
           builder: (context, state) => BlocProvider(
             create: (_) => sl<TodoListBloc>(),
             child: const TodoListPage(),
           ),
         ),
         GoRoute(
-          path: '/todos/:id',
+          path: TodoRoutes.pathDetail,
+          name: TodoRoutes.nameDetail,
           builder: (context, state) {
-            final id = int.parse(state.pathParameters['id']!);
+            final id = int.parse(state.pathParameters[TodoRoutes.paramId]!);
             return BlocProvider(
               create: (_) => sl<TodoDetailBloc>()..add(LoadTodoDetail(id)),
               child: const TodoDetailPage(),

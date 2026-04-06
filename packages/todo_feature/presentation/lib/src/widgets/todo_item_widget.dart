@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:todo_feature_domain/todo_feature_domain.dart';
+import 'package:todo_feature_navigation/todo_feature_navigation.dart';
 
 class TodoItemWidget extends StatelessWidget {
   final Todo todo;
@@ -35,7 +35,7 @@ class TodoItemWidget extends StatelessWidget {
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 4),
         child: InkWell(
-          onTap: () => context.push('/todos/${todo.id}'),
+          onTap: () => TodoNavigation.pushDetail(context, id: todo.id!),
           borderRadius: BorderRadius.circular(16),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
