@@ -11,12 +11,9 @@ resolution: workspace
 dependencies:
   flutter:
     sdk: flutter
-  core:
-    path: ../../packages/core
-  todo_feature:
-    path: ../../packages/todo_feature
-  profile_feature:
-    path: ../../packages/profile_feature
+  core: 0.0.1
+  todo_feature: 
+  profile_feature: 0.0.1
   go_router: ^14.8.1
   get_it: ^8.0.3
   sqflite: ^2.4.2
