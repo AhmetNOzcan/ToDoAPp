@@ -7,3 +7,4 @@ set -e
 
 echo "==> flutter analyze (workspace)"
 flutter analyze
+bloc lint .
