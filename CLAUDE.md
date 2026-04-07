@@ -5,7 +5,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build & Test Commands
 
 ```bash
-# Dependencies (run from root — packages use path deps so this covers everything)
+# First time setup (run from root) - Installs dependencies and generates code
+sh setup.sh
+
+# Dependencies (if doing manually)
 flutter pub get
 
 # Run the app
@@ -29,6 +32,9 @@ cd packages/todo_feature/presentation && flutter test test/bloc/todo_list_bloc_t
 
 # Run a single test by name
 cd packages/todo_feature/presentation && flutter test --name "emits loaded when LoadTodos succeeds"
+
+# Generate Easy Localization Keys (after updating JSON files)
+cd apps/todo_pro && sh scripts/generate_localization.sh
 ```
 
 There is no melos, Makefile, or CI config. Standard `flutter` CLI is used for everything.
@@ -106,3 +112,11 @@ Each feature helper exposes `Future<Database> get database` and lazily opens on 
 - BLoC tests: use `blocTest` from `bloc_test` package
 - Test file structure mirrors source structure under `test/`
 - All dependencies are constructor-injected, making mocking straightforward
+
+## Localization (Easy Localization)
+
+- Custom UI strings must NOT be hardcoded. Use `easy_localization`.
+- **JSON Files:** The base strings are kept in `packages/core/assets/translations/`.
+- **Overrides:** Individual app shells (`todo_lite`, `todo_pro`) can override core strings by providing their own `assets/translations/tr-TR.json` files and placing them in their local assets. The `MonorepoAssetLoader` (initialized in `main.dart`) automatically merges and overrides these keys at runtime.
+- **Code Generation:** Run `sh packages/core/scripts/generate_localization.sh` from the `core` folder. This generates `locale_keys.g.dart`.
+- **Consumption:** Feature packages import `package:core/core.dart` and use `LocaleKeys.yourKey.localize` (the custom extension).

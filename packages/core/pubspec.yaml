@@ -12,6 +12,7 @@ resolution: workspace
 dependencies:
   flutter:
     sdk: flutter
+  easy_localization: ^3.0.3
   get_it: ^8.0.3
   go_router: ^14.8.1
   equatable: ^2.0.7
@@ -22,3 +23,5 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 flutter:
+  assets:
+    - assets/translations/
