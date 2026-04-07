@@ -26,6 +26,9 @@ class TodoProApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Todo Pro',
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
@@ -49,16 +52,16 @@ class _TabDescriptor {
   final void Function(BuildContext context) go;
 }
 
-const List<_TabDescriptor> _tabs = <_TabDescriptor>[
+final List<_TabDescriptor> _tabs = <_TabDescriptor>[
   _TabDescriptor(
     icon: Icons.checklist_rounded,
-    label: 'Todos',
+    label: LocaleKeys.tasks.localize,
     matches: TodoRoutes.matches,
     go: TodoNavigation.goToList,
   ),
   _TabDescriptor(
     icon: Icons.person_outline,
-    label: 'Profile',
+    label: LocaleKeys.profile.localize,
     matches: ProfileRoutes.matches,
     go: ProfileNavigation.goToRoot,
   ),

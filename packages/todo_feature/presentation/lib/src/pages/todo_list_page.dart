@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -67,7 +68,7 @@ class _TodoListPageState extends State<TodoListPage> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'No todos yet',
+                    '${LocaleKeys.welcome.localize} No todos yet',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: Theme.of(context)
                               .colorScheme

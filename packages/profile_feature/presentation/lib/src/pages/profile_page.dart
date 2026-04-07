@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:core/core.dart';
 
 import '../bloc/profile_bloc.dart';
 import '../bloc/profile_event.dart';
@@ -39,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Text(LocaleKeys.profile.localize),
         actions: [
           BlocBuilder<ProfileBloc, ProfileState>(
             builder: (context, state) {
@@ -161,7 +162,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           children: [
             Text(
-              profile.fullName.isEmpty ? 'No Name Set' : profile.fullName,
+              "${LocaleKeys.welcome.localize}${profile.fullName}",
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.w600,
               ),

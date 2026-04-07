@@ -4,16 +4,18 @@
       "WebFetch(domain:pub.dev)",
       "Bash(bloc lint:*)",
       "Bash(~/.pub-cache/bin/bloc lint:*)",
-      "Bash(grep -n \"bloc\\\\.\\\\\\(getTodos\\\\|addTodo\\\\|toggleTodo\\\\|deleteTodo\\\\|getTodoById\\\\|updateTodo\\\\\\)\" /Users/ahmetnasitozcan/Development/ToDoAPp/packages/todo_feature/test/presentation/bloc/*.dart)",
+      "Bash(grep -n \"bloc\\\\.\\\\\\(getTodos\\\\|addTodo\\\\|toggleTodo\\\\|deleteTodo\\\\|getTodoById\\\\|updateTodo\\\\\\)\" packages/todo_feature/test/presentation/bloc/*.dart)",
       "Bash(git config:*)",
       "Bash(chmod +x .githooks/pre-push)",
-      "Bash(find /Users/ahmetnasitozcan/Development/ToDoAPp -name \"pubspec.yaml\" -type f -exec grep -l \"melos\\\\|workspace\" {} \\\\;)",
+      "Bash(find . -name \"pubspec.yaml\" -type f -exec grep -l \"melos\\\\|workspace\" {} \\\\;)",
       "Bash(git mv:*)",
       "Bash(git rm:*)",
       "Bash(git push:*)",
       "Bash(.githooks/pre-push)",
-      "Read(//Users/ahmetnasitozcan/.pub-cache/hosted/**)",
-      "Bash(dart test:*)"
+      "Read(//Users/*/.pub-cache/hosted/**)",
+      "Bash(dart test:*)",
+      "Bash(sh scripts/generate_localization.sh)",
+      "Bash(dart run easy_localization:generate:*)"
     ]
   }
 }
