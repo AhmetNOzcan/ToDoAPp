@@ -10,7 +10,7 @@ class TodoLiteApp extends StatelessWidget {
 
   late final GoRouter _router = GoRouter(
     initialLocation: TodoRoutes.locationList(),
-    routes: [...featureModules.expand((m) => m.routes)],
+    routes: [...featureRoutes.expand((m) => m.routes)],
   );
 
   @override

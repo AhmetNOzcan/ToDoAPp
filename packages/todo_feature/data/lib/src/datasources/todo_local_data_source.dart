@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../database/todo_database.dart';
@@ -13,6 +14,7 @@ abstract class TodoLocalDataSource {
   Future<int> getCompletedTodoCount();
 }
 
+@LazySingleton(as: TodoLocalDataSource)
 class TodoLocalDataSourceImpl implements TodoLocalDataSource {
   final TodoDatabase _db;
 

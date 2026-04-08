@@ -15,7 +15,14 @@
       "Read(//Users/*/.pub-cache/hosted/**)",
       "Bash(dart test:*)",
       "Bash(sh scripts/generate_localization.sh)",
-      "Bash(dart run easy_localization:generate:*)"
+      "Bash(dart run easy_localization:generate:*)",
+      "Bash(find /Users/ahmetnasitozcan/Development/ToDoAPp -name \"*.dart\" -type f -exec grep -l \"import.*injectable\\\\|@injectable\\\\|@lazySingleton\\\\|@factoryMethod\" {} \\\\;)",
+      "Bash(python3 -c ':*)",
+      "Read(//tmp/**)",
+      "Bash(dart run:*)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
     ]
   }
 }

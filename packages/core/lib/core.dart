@@ -1,7 +1,9 @@
 export 'src/di/service_locator.dart';
-export 'src/navigation/feature_module.dart';
+export 'src/navigation/feature_routes.dart';
 export 'src/theme/app_theme.dart';
 export 'package:easy_localization/easy_localization.dart';
+export 'package:get_it/get_it.dart';
+export 'package:injectable/injectable.dart';
 export 'src/localization/locale_keys.g.dart';
 export 'src/localization/translation_extension.dart';
 export 'src/localization/monorepo_asset_loader.dart';

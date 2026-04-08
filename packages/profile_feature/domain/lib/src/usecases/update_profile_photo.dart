@@ -1,5 +1,8 @@
+import 'package:injectable/injectable.dart';
+
 import '../repositories/profile_repository.dart';
 
+@injectable
 class UpdateProfilePhoto {
   final ProfileRepository repository;
 

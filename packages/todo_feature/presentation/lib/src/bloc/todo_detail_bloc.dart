@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:todo_feature_domain/todo_feature_domain.dart';
 
 import 'todo_detail_event.dart';
 import 'todo_detail_state.dart';
 
+@injectable
 class TodoDetailBloc extends Bloc<TodoDetailEvent, TodoDetailState> {
   final GetTodoById _getTodoById;
   final UpdateTodo _updateTodo;

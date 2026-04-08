@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:todo_feature_domain/todo_feature_domain.dart';
 
 import 'todo_list_event.dart';
 import 'todo_list_state.dart';
 
+@injectable
 class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
   final GetTodos _getTodos;
   final AddTodo _addTodo;

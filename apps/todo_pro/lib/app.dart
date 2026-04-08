@@ -16,7 +16,7 @@ class TodoProApp extends StatelessWidget {
         builder: (context, state, child) =>
             _ScaffoldWithBottomNav(child: child),
         routes: [
-          ...featureModules.expand((m) => m.routes),
+          ...featureRoutes.expand((m) => m.routes),
         ],
       ),
     ],

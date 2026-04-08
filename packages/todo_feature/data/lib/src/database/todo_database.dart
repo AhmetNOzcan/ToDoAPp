@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -5,6 +6,7 @@ import 'package:sqflite/sqflite.dart';
 ///
 /// Each feature manages its own database file so that features remain
 /// self-contained and can be added or removed without touching shared code.
+@lazySingleton
 class TodoDatabase {
   static const _databaseName = 'todo_feature.db';
   static const _databaseVersion = 1;

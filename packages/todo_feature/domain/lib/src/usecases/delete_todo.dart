@@ -1,5 +1,8 @@
+import 'package:injectable/injectable.dart';
+
 import '../repositories/todo_repository.dart';
 
+@injectable
 class DeleteTodo {
   final TodoRepository repository;
 

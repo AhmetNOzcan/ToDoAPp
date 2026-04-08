@@ -1,15 +1,17 @@
+import 'package:injectable/injectable.dart';
 import 'package:profile_feature_domain/profile_feature_domain.dart';
 
 import '../datasources/profile_local_data_source.dart';
 import '../models/profile_model.dart';
 
+@LazySingleton(as: ProfileRepository)
 class ProfileRepositoryImpl implements ProfileRepository {
   final ProfileLocalDataSource localDataSource;
   final String appDocumentsPath;
 
   ProfileRepositoryImpl({
     required this.localDataSource,
-    required this.appDocumentsPath,
+    @Named('appDocumentsPath') required this.appDocumentsPath,
   });
 
   @override

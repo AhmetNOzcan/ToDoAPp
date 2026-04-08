@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:injectable/injectable.dart';
 import 'package:path/path.dart' as p;
 
 import '../database/profile_database.dart';
@@ -11,6 +12,7 @@ abstract class ProfileLocalDataSource {
   Future<String> savePhoto(String sourcePath, String destinationDir);
 }
 
+@LazySingleton(as: ProfileLocalDataSource)
 class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
   final ProfileDatabase _db;
 
