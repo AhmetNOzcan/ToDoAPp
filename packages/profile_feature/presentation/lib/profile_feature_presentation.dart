@@ -4,6 +4,5 @@
 export 'package:profile_feature_data/profile_feature_data.dart';
 export 'package:profile_feature_domain/profile_feature_domain.dart';
 
-export 'src/di/profile_feature_di.dart';
 export 'src/di/profile_feature_di.module.dart';
 export 'src/profile_feature_routes.dart';

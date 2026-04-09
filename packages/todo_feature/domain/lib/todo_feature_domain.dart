@@ -1,4 +1,3 @@
-export 'src/di/todo_feature_domain_di.dart';
 export 'src/di/todo_feature_domain_di.module.dart';
 export 'src/entities/todo.dart';
 export 'src/repositories/todo_repository.dart';
