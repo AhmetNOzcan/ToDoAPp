@@ -6,6 +6,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i687;
 
+import 'package:core/core.dart' as _i494;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:todo_feature_data/src/database/todo_database.dart' as _i843;
 import 'package:todo_feature_data/src/datasources/todo_local_data_source.dart'
@@ -14,6 +15,7 @@ import 'package:todo_feature_data/src/di/todo_repository_bindings.dart'
     as _i105;
 import 'package:todo_feature_data/src/repositories/todo_repository_impl.dart'
     as _i192;
+import 'package:todo_feature_data/src/todo_logger.dart' as _i530;
 import 'package:todo_feature_domain/todo_feature_domain.dart' as _i41;
 
 class TodoFeatureDataPackageModule extends _i526.MicroPackageModule {
@@ -22,6 +24,10 @@ class TodoFeatureDataPackageModule extends _i526.MicroPackageModule {
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
     final todoRepositoryBindings = _$TodoRepositoryBindings();
     gh.lazySingleton<_i843.TodoDatabase>(() => _i843.TodoDatabase());
+    gh.lazySingleton<_i494.Logger>(
+      () => _i530.TodoLogger(),
+      instanceName: 'TodoLogger',
+    );
     gh.lazySingleton<_i158.TodoLocalDataSource>(
         () => _i158.TodoLocalDataSourceImpl(db: gh<_i843.TodoDatabase>()));
     gh.lazySingleton<_i192.TodoRepositoryImpl>(() => _i192.TodoRepositoryImpl(

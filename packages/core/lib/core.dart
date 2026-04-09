@@ -8,5 +8,4 @@ export 'src/localization/locale_keys.g.dart';
 export 'src/localization/translation_extension.dart';
 export 'src/localization/monorepo_asset_loader.dart';
 export 'src/localization/monorepo_localization_provider.dart';
-
-
+export 'src/logger.dart';

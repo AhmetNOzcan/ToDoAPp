@@ -6,6 +6,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i687;
 
+import 'package:core/core.dart' as _i494;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:profile_feature_data/src/database/profile_database.dart'
     as _i485;
@@ -13,6 +14,7 @@ import 'package:profile_feature_data/src/datasources/profile_local_data_source.d
     as _i1040;
 import 'package:profile_feature_data/src/di/profile_environment_module.dart'
     as _i106;
+import 'package:profile_feature_data/src/profile_logger.dart' as _i929;
 import 'package:profile_feature_data/src/repositories/profile_repository_impl.dart'
     as _i421;
 import 'package:profile_feature_domain/profile_feature_domain.dart' as _i536;
@@ -27,6 +29,10 @@ class ProfileFeatureDataPackageModule extends _i526.MicroPackageModule {
       () => profileEnvironmentModule.appDocumentsPath(),
       instanceName: 'appDocumentsPath',
       preResolve: true,
+    );
+    gh.lazySingleton<_i494.Logger>(
+      () => _i929.ProfileLogger(),
+      instanceName: 'ProfileLogger',
     );
     gh.lazySingleton<_i1040.ProfileLocalDataSource>(() =>
         _i1040.ProfileLocalDataSourceImpl(db: gh<_i485.ProfileDatabase>()));

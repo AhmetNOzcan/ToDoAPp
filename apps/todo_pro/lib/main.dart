@@ -7,11 +7,8 @@ import 'di/injection.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  
+
   await initDependencies();
-  runApp(
-    MonorepoLocalizationProvider(
-      child: TodoProApp(),
-    ),
-  );
+
+  runApp(MonorepoLocalizationProvider(child: TodoProApp()));
 }
