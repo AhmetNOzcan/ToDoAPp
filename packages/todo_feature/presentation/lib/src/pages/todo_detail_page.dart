@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../bloc/todo_detail_bloc.dart';
 import '../bloc/todo_detail_event.dart';
@@ -42,12 +43,12 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
         }
         if (state.status == TodoDetailStatus.saved) {
           setState(() => _isEditing = false);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Todo updated')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('Todo updated')));
         }
         if (state.status == TodoDetailStatus.deleted) {
-          Navigator.of(context).pop(true);
+          context.pop(true);
         }
         if (state.status == TodoDetailStatus.error) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -78,8 +79,8 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
           body: isLoading
               ? const Center(child: CircularProgressIndicator())
               : todo == null
-                  ? const Center(child: Text('Todo not found'))
-                  : _buildContent(context, state),
+              ? const Center(child: Text('Todo not found'))
+              : _buildContent(context, state),
         );
       },
     );
@@ -99,16 +100,18 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
               TextFormField(
                 controller: _titleController,
                 decoration: const InputDecoration(labelText: 'Title'),
-                validator: (value) =>
-                    value == null || value.trim().isEmpty ? 'Title is required' : null,
+                validator: (value) => value == null || value.trim().isEmpty
+                    ? 'Title is required'
+                    : null,
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _descriptionController,
                 decoration: const InputDecoration(labelText: 'Description'),
                 maxLines: 5,
-                validator: (value) =>
-                    value == null || value.trim().isEmpty ? 'Description is required' : null,
+                validator: (value) => value == null || value.trim().isEmpty
+                    ? 'Description is required'
+                    : null,
               ),
               const SizedBox(height: 24),
               Row(
@@ -129,12 +132,11 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           context.read<TodoDetailBloc>().add(
-                                UpdateTodoRequested(
-                                  title: _titleController.text.trim(),
-                                  description:
-                                      _descriptionController.text.trim(),
-                                ),
-                              );
+                            UpdateTodoRequested(
+                              title: _titleController.text.trim(),
+                              description: _descriptionController.text.trim(),
+                            ),
+                          );
                         }
                       },
                       child: const Text('Save'),
@@ -169,16 +171,18 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
                                 ? TextDecoration.lineThrough
                                 : null,
                             color: todo.isCompleted
-                                ? theme.colorScheme.onSurface.withValues(alpha: 0.5)
+                                ? theme.colorScheme.onSurface.withValues(
+                                    alpha: 0.5,
+                                  )
                                 : null,
                           ),
                         ),
                       ),
                       Checkbox(
                         value: todo.isCompleted,
-                        onChanged: (_) => context
-                            .read<TodoDetailBloc>()
-                            .add(const ToggleTodoDetailRequested()),
+                        onChanged: (_) => context.read<TodoDetailBloc>().add(
+                          const ToggleTodoDetailRequested(),
+                        ),
                       ),
                     ],
                   ),
@@ -200,13 +204,17 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
                       Icon(
                         Icons.calendar_today,
                         size: 14,
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: 0.5,
+                        ),
                       ),
                       const SizedBox(width: 4),
                       Text(
                         'Created ${_formatDate(todo.createdAt)}',
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.5,
+                          ),
                         ),
                       ),
                       const Spacer(),
@@ -253,15 +261,15 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
         content: const Text('Are you sure you want to delete this todo?'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
+            onPressed: () => context.pop(),
             child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(dialogContext).pop();
-              context
-                  .read<TodoDetailBloc>()
-                  .add(const DeleteTodoDetailRequested());
+              context.read<TodoDetailBloc>().add(
+                const DeleteTodoDetailRequested(),
+              );
             },
             style: TextButton.styleFrom(
               foregroundColor: Theme.of(context).colorScheme.error,

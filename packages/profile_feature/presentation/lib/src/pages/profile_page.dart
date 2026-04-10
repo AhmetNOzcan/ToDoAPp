@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:core/core.dart';
+import 'package:go_router/go_router.dart';
 
 import '../bloc/profile_bloc.dart';
 import '../bloc/profile_event.dart';
@@ -49,10 +50,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 icon: Icon(_isEditing ? Icons.close : Icons.edit),
                 onPressed: () {
                   if (_isEditing) {
-                    _firstNameController.text =
-                        state.profile?.firstName ?? '';
-                    _lastNameController.text =
-                        state.profile?.lastName ?? '';
+                    _firstNameController.text = state.profile?.firstName ?? '';
+                    _lastNameController.text = state.profile?.lastName ?? '';
                   }
                   setState(() => _isEditing = !_isEditing);
                 },
@@ -71,21 +70,20 @@ class _ProfilePageState extends State<ProfilePage> {
             setState(() => _isEditing = false);
             _firstNameController.text = state.profile?.firstName ?? '';
             _lastNameController.text = state.profile?.lastName ?? '';
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Profile updated')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(const SnackBar(content: Text('Profile updated')));
           }
           if (state.status == ProfileStatus.error) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                  content:
-                      Text(state.errorMessage ?? 'An error occurred')),
+                content: Text(state.errorMessage ?? 'An error occurred'),
+              ),
             );
           }
         },
         builder: (context, state) {
-          if (state.status == ProfileStatus.loading &&
-              state.profile == null) {
+          if (state.status == ProfileStatus.loading && state.profile == null) {
             return const Center(child: CircularProgressIndicator());
           }
 
@@ -100,7 +98,10 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 _buildAvatar(context, state),
                 const SizedBox(height: 24),
-                if (_isEditing) _buildEditForm(context) else _buildProfileInfo(context, state),
+                if (_isEditing)
+                  _buildEditForm(context)
+                else
+                  _buildProfileInfo(context, state),
                 const SizedBox(height: 32),
                 _buildStatsCard(context, state),
               ],
@@ -121,8 +122,9 @@ class _ProfilePageState extends State<ProfilePage> {
         CircleAvatar(
           radius: 60,
           backgroundColor: theme.colorScheme.primaryContainer,
-          backgroundImage:
-              photoPath != null ? FileImage(File(photoPath)) : null,
+          backgroundImage: photoPath != null
+              ? FileImage(File(photoPath))
+              : null,
           child: photoPath == null
               ? Icon(
                   Icons.person,
@@ -213,11 +215,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       context.read<ProfileBloc>().add(
-                            UpdateProfileRequested(
-                              firstName: _firstNameController.text.trim(),
-                              lastName: _lastNameController.text.trim(),
-                            ),
-                          );
+                        UpdateProfileRequested(
+                          firstName: _firstNameController.text.trim(),
+                          lastName: _lastNameController.text.trim(),
+                        ),
+                      );
                     }
                   },
                   child: const Text('Save'),
@@ -285,7 +287,7 @@ class _ProfilePageState extends State<ProfilePage> {
               leading: const Icon(Icons.camera_alt),
               title: const Text('Take Photo'),
               onTap: () {
-                Navigator.of(bottomSheetContext).pop();
+                context.pop();
                 context.read<ProfileBloc>().add(const PickPhotoFromCamera());
               },
             ),
@@ -294,9 +296,7 @@ class _ProfilePageState extends State<ProfilePage> {
               title: const Text('Choose from Gallery'),
               onTap: () {
                 Navigator.of(bottomSheetContext).pop();
-                context
-                    .read<ProfileBloc>()
-                    .add(const PickPhotoFromGallery());
+                context.read<ProfileBloc>().add(const PickPhotoFromGallery());
               },
             ),
           ],
