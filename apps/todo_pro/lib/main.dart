@@ -7,6 +7,7 @@ import 'di/injection.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await MonorepoAssetResolver.instance.init();
 
   await initDependencies();
 

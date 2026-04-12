@@ -89,32 +89,49 @@ class _TodoListPageState extends State<TodoListPage> {
             );
           }
 
-          return RefreshIndicator(
-            onRefresh: () async {
-              context.read<TodoListBloc>().add(const LoadTodos());
-            },
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              itemCount: state.todos.length,
-              itemBuilder: (context, index) {
-                final todo = state.todos[index];
-                return TodoItemWidget(
-                  todo: todo,
-                  onToggle: () => context.read<TodoListBloc>().add(
-                    ToggleTodoRequested(todo.id!),
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: PngAsset.more_birds.toWidget(
+                    height: 150,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
-                  onDelete: () => context.read<TodoListBloc>().add(
-                    DeleteTodoRequested(todo.id!),
+                ),
+              ),
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<TodoListBloc>().add(const LoadTodos());
+                  },
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    itemCount: state.todos.length,
+                    itemBuilder: (context, index) {
+                      final todo = state.todos[index];
+                      return TodoItemWidget(
+                        todo: todo,
+                        onToggle: () => context.read<TodoListBloc>().add(
+                          ToggleTodoRequested(todo.id!),
+                        ),
+                        onDelete: () => context.read<TodoListBloc>().add(
+                          DeleteTodoRequested(todo.id!),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
+                ),
+              ),
+            ],
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddTodoDialog(context),
-        child: const Icon(Icons.add),
+        child: SvgAsset.add.toWidget(),
       ),
     );
   }
