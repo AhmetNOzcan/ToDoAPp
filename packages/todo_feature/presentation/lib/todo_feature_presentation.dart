@@ -5,4 +5,4 @@ export 'package:todo_feature_data/todo_feature_data.dart';
 export 'package:todo_feature_domain/todo_feature_domain.dart';
 
 export 'src/di/todo_feature_di.module.dart';
-export 'src/todo_feature_routes.dart';
+export 'src/todo_nav_graph.dart';

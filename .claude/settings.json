@@ -19,7 +19,10 @@
       "Bash(find /Users/ahmetnasitozcan/Development/ToDoAPp -name \"*.dart\" -type f -exec grep -l \"import.*injectable\\\\|@injectable\\\\|@lazySingleton\\\\|@factoryMethod\" {} \\\\;)",
       "Bash(python3 -c ':*)",
       "Read(//tmp/**)",
-      "Bash(dart run:*)"
+      "Bash(dart run:*)",
+      "Bash(grep -r \"getAll\\\\|Logger\" /Users/ahmetnasitozcan/Development/ToDoAPp/apps/*/lib/*.dart)",
+      "Bash(awk '/^  get_it:/,/^  [a-z]/' /Users/ahmetnasitozcan/Development/ToDoAPp/pubspec.lock)",
+      "Bash(wait)"
     ],
     "additionalDirectories": [
       "/tmp"

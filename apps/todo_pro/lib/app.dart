@@ -4,20 +4,19 @@ import 'package:go_router/go_router.dart';
 import 'package:profile_feature_navigation/profile_feature_navigation.dart';
 import 'package:todo_feature_navigation/todo_feature_navigation.dart';
 
-import 'di/injection.dart';
-
 class TodoProApp extends StatelessWidget {
   TodoProApp({super.key});
 
   late final GoRouter _router = GoRouter(
-    initialLocation: TodoRoutes.locationList(),
+    initialLocation: sl<TodoNavigator>().initialLocation,
     routes: [
       ShellRoute(
         builder: (context, state, child) =>
             _ScaffoldWithBottomNav(child: child),
-        routes: [
-          ...featureRoutes.expand((m) => m.routes),
-        ],
+        routes: sl
+            .getAll<NavGraph>()
+            .expand((g) => g.build())
+            .toList(growable: false),
       ),
     ],
   );
@@ -52,21 +51,6 @@ class _TabDescriptor {
   final void Function(BuildContext context) go;
 }
 
-final List<_TabDescriptor> _tabs = <_TabDescriptor>[
-  _TabDescriptor(
-    icon: Icons.checklist_rounded,
-    label: LocaleKeys.tasks.localize,
-    matches: TodoRoutes.matches,
-    go: TodoNavigation.goToList,
-  ),
-  _TabDescriptor(
-    icon: Icons.person_outline,
-    label: LocaleKeys.profile.localize,
-    matches: ProfileRoutes.matches,
-    go: ProfileNavigation.goToRoot,
-  ),
-];
-
 class _ScaffoldWithBottomNav extends StatelessWidget {
   final Widget child;
 
@@ -74,13 +58,39 @@ class _ScaffoldWithBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final todoNav = sl<TodoNavigator>();
+    final profileNav = sl<ProfileNavigator>();
+    final tabs = <_TabDescriptor>[
+      _TabDescriptor(
+        icon: Icons.checklist_rounded,
+        label: LocaleKeys.tasks.localize,
+        matches: todoNav.matches,
+        go: todoNav.goToList,
+      ),
+      _TabDescriptor(
+        icon: Icons.person_outline,
+        label: LocaleKeys.profile.localize,
+        matches: profileNav.matches,
+        go: profileNav.goToRoot,
+      ),
+    ];
+
+    final location = GoRouterState.of(context).uri.toString();
+    var selectedIndex = 0;
+    for (var i = 0; i < tabs.length; i++) {
+      if (tabs[i].matches(location)) {
+        selectedIndex = i;
+        break;
+      }
+    }
+
     return Scaffold(
       body: child,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _calculateSelectedIndex(context),
-        onTap: (index) => _onItemTapped(index, context),
+        currentIndex: selectedIndex,
+        onTap: (index) => tabs[index].go(context),
         items: [
-          for (final tab in _tabs)
+          for (final tab in tabs)
             BottomNavigationBarItem(
               icon: Icon(tab.icon),
               label: tab.label,
@@ -88,17 +98,5 @@ class _ScaffoldWithBottomNav extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  int _calculateSelectedIndex(BuildContext context) {
-    final location = GoRouterState.of(context).uri.toString();
-    for (var i = 0; i < _tabs.length; i++) {
-      if (_tabs[i].matches(location)) return i;
-    }
-    return 0;
-  }
-
-  void _onItemTapped(int index, BuildContext context) {
-    _tabs[index].go(context);
   }
 }

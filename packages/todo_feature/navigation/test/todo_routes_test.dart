@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:todo_feature_navigation/src/todo_navigator_impl.dart';
 import 'package:todo_feature_navigation/todo_feature_navigation.dart';
 
 void main() {
@@ -12,26 +13,25 @@ void main() {
       expect(TodoRoutes.nameList, 'todo_list');
       expect(TodoRoutes.nameDetail, 'todo_detail');
     });
+  });
 
-    test('locationList builds the list URL', () {
-      expect(TodoRoutes.locationList(), '/todos');
-    });
+  group('TodoNavigatorImpl', () {
+    final navigator = TodoNavigatorImpl();
 
-    test('locationDetail builds the URL GoRoute will match', () {
-      expect(TodoRoutes.locationDetail(42), '/todos/42');
-      expect(TodoRoutes.locationDetail(0), '/todos/0');
+    test('initialLocation points at the todo list', () {
+      expect(navigator.initialLocation, '/todos');
     });
 
     test('matches recognises list and detail locations', () {
-      expect(TodoRoutes.matches('/todos'), isTrue);
-      expect(TodoRoutes.matches('/todos/5'), isTrue);
-      expect(TodoRoutes.matches('/todos/123/something'), isTrue);
+      expect(navigator.matches('/todos'), isTrue);
+      expect(navigator.matches('/todos/5'), isTrue);
+      expect(navigator.matches('/todos/123/something'), isTrue);
     });
 
     test('matches rejects unrelated locations', () {
-      expect(TodoRoutes.matches('/profile'), isFalse);
-      expect(TodoRoutes.matches('/'), isFalse);
-      expect(TodoRoutes.matches(''), isFalse);
+      expect(navigator.matches('/profile'), isFalse);
+      expect(navigator.matches('/'), isFalse);
+      expect(navigator.matches(''), isFalse);
     });
   });
 }

@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_feature_navigation/todo_feature_navigation.dart';
 
-import 'di/injection.dart';
-
 class TodoLiteApp extends StatelessWidget {
   TodoLiteApp({super.key});
 
   late final GoRouter _router = GoRouter(
-    initialLocation: TodoRoutes.locationList(),
-    routes: [...featureRoutes.expand((m) => m.routes)],
+    initialLocation: sl<TodoNavigator>().initialLocation,
+    routes:
+        sl.getAll<NavGraph>().expand((g) => g.build()).toList(growable: false),
   );
 
   @override
