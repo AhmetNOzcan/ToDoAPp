@@ -120,3 +120,74 @@ Each feature helper exposes `Future<Database> get database` and lazily opens on 
 - **Overrides:** Individual app shells (`todo_lite`, `todo_pro`) can override core strings by providing their own `assets/translations/tr-TR.json` files and placing them in their local assets. The `MonorepoAssetLoader` (initialized in `main.dart`) automatically merges and overrides these keys at runtime.
 - **Code Generation:** Run `sh packages/core/scripts/generate_localization.sh` from the `core` folder. This generates `locale_keys.g.dart`.
 - **Consumption:** Feature packages import `package:core/core.dart` and use `LocaleKeys.yourKey.localize` (the custom extension).
+
+## Asset Management (Type-Safe Enums)
+
+Assets are accessed through **enhanced enums** that provide compile-time safety, consistent naming conventions, and built-in widget builders. The enum definitions live in `packages/core/lib/src/enums/`.
+
+Base asset files live in `core`. However, to support feature branding, **app shells can override them using the exact same path convention as localization**.
+
+### Enum Types
+
+| Enum | Convention | Widget | File |
+|------|-----------|--------|------|
+| `PngAsset` | `assets/images/img_{name}.png` | `Image` | `png_asset.dart` |
+| `SvgAsset` | `assets/icon/ic_{name}.svg` | `SvgPicture` | `svg_asset.dart` |
+| `LottieAsset` | `assets/json/dt_{name}.json` | `Lottie` | `lottie_asset.dart` |
+
+### Usage
+
+```dart
+import 'package:core/core.dart';
+
+SvgAsset.settings.toWidget(height: 24, color: Colors.white);
+PngAsset.more_birds.toWidget(height: 150, fit: BoxFit.cover);
+```
+
+### Architecture: Core Base + Shell Override
+
+This system mirrors `MonorepoLocalizationProvider` to ensure consistency:
+
+```
+packages/core/assets/images/img_more_birds.png        ← Base (used if no override exists)
+apps/todo_lite/assets/images/img_more_birds.png       ← Override for todo_lite
+apps/todo_pro/assets/images/img_more_birds.png        ← Override for todo_pro
+```
+
+At startup, `MonorepoAssetResolver.init()` probes which base assets the shell has overridden. When you call `PngAsset.more_birds.toWidget()`, the resolver transparently routes the request:
+- Uses `package: 'core'` for base assets
+- Uses `package: null` to load the shell's customized physical file
+
+### App Shell Configuration (required)
+
+Each app shell must declare exactly which asset folders it uses (so Flutter bundles them) and call the resolver init at startup.
+
+**1. Update `pubspec.yaml` in the app shell:**
+```yaml
+# apps/todo_lite/pubspec.yaml
+flutter:
+  assets:
+    - assets/translations/
+    - assets/images/    # Shell overrides
+```
+
+**2. Initialize Resolver in `main.dart`:**
+```dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  // Probe for overrides BEFORE running the app
+  await MonorepoAssetResolver.instance.init();
+
+  await initDependencies();
+  runApp(/*...*/);
+}
+```
+
+### Adding a New Asset
+
+1. Add the enum value to the appropriate enum in `packages/core/lib/src/enums/`
+2. Place the base asset file in `packages/core/assets/{icon,images,json}/`
+3. If a shell needs a **custom version**: Place its file at `apps/{shell}/assets/{icon,images,json}/` and ensure the folder is in the shell's pubspec
+

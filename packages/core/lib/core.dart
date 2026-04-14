@@ -9,3 +9,7 @@ export 'src/localization/translation_extension.dart';
 export 'src/localization/monorepo_asset_loader.dart';
 export 'src/localization/monorepo_localization_provider.dart';
 export 'src/logger.dart';
+export 'src/enums/png_asset.dart';
+export 'src/enums/svg_asset.dart';
+export 'src/enums/lottie_asset.dart';
+export 'src/enums/monorepo_asset_resolver.dart';
