@@ -22,7 +22,8 @@
       "Bash(dart run:*)",
       "Bash(grep -r \"getAll\\\\|Logger\" /Users/ahmetnasitozcan/Development/ToDoAPp/apps/*/lib/*.dart)",
       "Bash(awk '/^  get_it:/,/^  [a-z]/' /Users/ahmetnasitozcan/Development/ToDoAPp/pubspec.lock)",
-      "Bash(wait)"
+      "Bash(wait)",
+      "Bash(xargs ls *)"
     ],
     "additionalDirectories": [
       "/tmp"
